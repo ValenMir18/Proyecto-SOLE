@@ -1,0 +1,3 @@
+Juan García;juan@email.com;123456;cliente
+María López;maria@email.com;123456;cliente
+Admin SOLE;admin@sole.com;admin;admin

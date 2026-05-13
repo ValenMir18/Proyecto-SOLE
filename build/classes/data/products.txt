@@ -1,0 +1,9 @@
+1;Nike Air Max 270;Nike;Running;320000.0;24
+2;Adidas Ultraboost 22;Adidas;Running;480000.0;3
+3;Chuck Taylor All Star;Converse;Casual;185000.0;40
+4;Air Jordan 1 Retro;Nike;Basketball;650000.0;0
+5;Puma RS-X;Puma;Casual;320000.0;18
+6;Nike Air Force 1 '07;Nike;Casual;299000.0;15
+7;New Balance 990 V6;New Balance;Running;580000.0;0
+8;Chuck 70 Hi;Converse;Casual;185000.0;10
+9;Nike Blazer Mid 77;Nike;Casual;400000.0;7
