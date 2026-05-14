@@ -256,52 +256,100 @@ try {
     }
 
     /* ── PROFILE ── */
-    private void showProfile() {
-        setActive(btnProfile);
-        VBox view = new VBox(24);
-        view.setPadding(new Insets(28));
+   private void showProfile() {
+    setActive(btnProfile);
+    VBox view = new VBox(24);
+    view.setPadding(new Insets(28));
 
-        Label title = sectionTitle("MI PERFIL");
+    Label title = sectionTitle("MI PERFIL");
 
-        // Stats row
-        HBox stats = new HBox(16);
-        stats.getChildren().addAll(
-            statBox("12", "PEDIDOS"),
-            statBox("3",  "WISHLIST"),
-            statBox("$1.2M", "GASTADO")
+    // Stats row
+    HBox stats = new HBox(16);
+    stats.getChildren().addAll(
+        statBox("12", "PEDIDOS"),
+        statBox("3",  "WISHLIST"),
+        statBox("$1.2M", "GASTADO")
+    );
+
+    // Form — ahora guardamos referencia a los TextField
+    GridPane form = new GridPane();
+    form.setHgap(16); form.setVgap(12);
+
+    // Buscar nodo actual del usuario para cargar tel y dirección del txt
+    sole.model.Nodo nodoUser = DataStore.colaUsuarios.buscarPorEmail(user.getEmail());
+    String telActual = (nodoUser != null && nodoUser.telefono != null 
+                       && !nodoUser.telefono.isEmpty())
+                       ? nodoUser.telefono : "+57 300 000 0000";
+    String dirActual = (nodoUser != null && nodoUser.direccion != null
+                       && !nodoUser.direccion.isEmpty())
+                       ? nodoUser.direccion : "";
+
+    String[] parts = user.getName().split(" ", 2);
+
+    TextField tfNombre    = styledField(parts[0]);
+    TextField tfApellido  = styledField(parts.length > 1 ? parts[1] : "");
+    TextField tfEmail     = styledField(user.getEmail());
+    TextField tfTelefono  = styledField(telActual);   // ← viene del txt
+    TextField tfDireccion = styledField(dirActual);   // ← viene del txt
+    tfEmail.setEditable(false);
+
+    form.add(labeledField("NOMBRE",    tfNombre),   0, 0);
+    form.add(labeledField("APELLIDO",  tfApellido), 1, 0);
+    form.add(labeledField("EMAIL",     tfEmail),    0, 1);
+    form.add(labeledField("TELÉFONO",  tfTelefono), 1, 1);
+
+    VBox dirBox = labeledField("DIRECCIÓN", tfDireccion);
+    GridPane.setColumnSpan(dirBox, 2);
+    form.add(dirBox, 0, 2);
+
+    HBox actions = new HBox(12);
+    Button save   = new Button("GUARDAR CAMBIOS");
+    save.getStyleClass().add("btn-primary");
+    Button cancel = new Button("Cancelar");
+    cancel.getStyleClass().add("btn-ghost");
+
+    save.setOnAction(e -> {
+        String nombreCompleto = tfNombre.getText().trim()
+                              + " " + tfApellido.getText().trim();
+        boolean ok = DataStore.colaUsuarios.actualizarPerfil(
+            user.getEmail(),
+            nombreCompleto,
+            tfTelefono.getText().trim(),
+            tfDireccion.getText().trim(),
+            "src/data/users.txt"
         );
+        if (ok) {
+            showAlert("Perfil", "Cambios guardados correctamente ✓");
+        } else {
+            showAlert("Error", "No se pudo guardar. Usuario no encontrado.");
+        }
+    });
 
-        // Form
-        GridPane form = new GridPane();
-        form.setHgap(16); form.setVgap(12);
+    cancel.setOnAction(e -> showProfile()); // recarga el perfil original
 
-        String[] parts = user.getName().split(" ", 2);
-        form.add(formField("NOMBRE", parts[0]),    0, 0);
-        form.add(formField("APELLIDO", parts.length > 1 ? parts[1] : ""),  1, 0);
-        form.add(formField("EMAIL", user.getEmail()),   0, 1);
-        form.add(formField("TELÉFONO", "+57 300 000 0000"), 1, 1);
+    actions.getChildren().addAll(save, cancel);
+    view.getChildren().addAll(title, stats, form, actions);
+    contentArea.setCenter(new ScrollPane(view) {{
+        setFitToWidth(true);
+        getStyleClass().add("scroll-pane");
+    }});
+}
 
-        VBox dirBox = new VBox(6);
-        Label dirLbl = new Label("DIRECCIÓN");
-        dirLbl.setStyle("-fx-text-fill: #555555; -fx-font-size: 10px; -fx-font-weight: bold;");
-        TextField dirField = new TextField("Calle 123 #45-67, Bogotá, Colombia");
-        dirField.getStyleClass().add("field");
-        dirField.setMaxWidth(Double.MAX_VALUE);
-        dirBox.getChildren().addAll(dirLbl, dirField);
-        GridPane.setColumnSpan(dirBox, 2);
-        form.add(dirBox, 0, 2);
+// ── Helpers nuevos para el perfil ──
+private TextField styledField(String value) {
+    TextField tf = new TextField(value);
+    tf.getStyleClass().add("field");
+    tf.setMinWidth(220);
+    return tf;
+}
 
-        HBox actions = new HBox(12);
-        Button save   = new Button("GUARDAR CAMBIOS");
-        save.getStyleClass().add("btn-primary");
-        Button cancel = new Button("Cancelar");
-        cancel.getStyleClass().add("btn-ghost");
-        save.setOnAction(e -> showAlert("Perfil", "Cambios guardados correctamente ✓"));
-        actions.getChildren().addAll(save, cancel);
-
-        view.getChildren().addAll(title, stats, form, actions);
-        contentArea.setCenter(new ScrollPane(view) {{ setFitToWidth(true); getStyleClass().add("scroll-pane"); }});
-    }
+private VBox labeledField(String label, TextField tf) {
+    VBox box = new VBox(6);
+    Label lbl = new Label(label);
+    lbl.setStyle("-fx-text-fill: #555555; -fx-font-size: 10px; -fx-font-weight: bold;");
+    box.getChildren().addAll(lbl, tf);
+    return box;
+}
 
     /* ── PEDIDOS ── */
     private void showPedidos() {

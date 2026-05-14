@@ -6,6 +6,9 @@ public class Nodo {
     public String email;
     public String password;
     public String role;
+    public String telefono;
+    public String direccion;
+    
 
     // Campos para Producto
     public int idProd;
@@ -23,12 +26,14 @@ public class Nodo {
     public Nodo ant;
 
     /** Constructor para nodo de Usuario */
-    public Nodo(String name, String email, String password, String role) {
+    public Nodo(String name, String email, String password, String role, String telefono, String direccion) {
         this.tipo     = "user";
         this.name     = name;
         this.email    = email;
         this.password = password;
         this.role     = role;
+        this.telefono = telefono;
+        this.direccion = direccion;
         this.sig      = null;
         this.ant      = null;
     }

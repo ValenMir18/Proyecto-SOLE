@@ -13,8 +13,8 @@ import java.util.List;
 public class DataStore {
 
     // ── Rutas de archivos ──
-    private static final String RUTA_USERS    = "data/users.txt";
-    private static final String RUTA_PRODUCTS = "data/products.txt";
+    private static final String RUTA_USERS    = "src/data/users.txt";
+    private static final String RUTA_PRODUCTS = "src/data/products.txt";
 
     // ── Estructuras de datos ──
     public static final Cola colaUsuarios  = new Cola();
@@ -29,9 +29,9 @@ public class DataStore {
         boolean usuariosCargados = colaUsuarios.cargarUsuarios(RUTA_USERS);
         if (!usuariosCargados) {
             // Datos iniciales si no existe el archivo
-            colaUsuarios.encolar(new Nodo("Juan García",  "juan@email.com",  "123456", "cliente"));
-            colaUsuarios.encolar(new Nodo("María López",  "maria@email.com", "123456", "cliente"));
-            colaUsuarios.encolar(new Nodo("Admin SOLE",   "admin@sole.com",  "admin",  "admin"));
+            colaUsuarios.encolar(new Nodo("Juan García", "juan@email.com",  "123456", "cliente", "+57 300 000 0000", "Calle 123 #45-67, Bogotá, Colombia"));
+            colaUsuarios.encolar(new Nodo("María López", "maria@email.com", "123456", "cliente", "+57 311 111 1111", "Carrera 45 #12-34, Medellín, Colombia"));
+            colaUsuarios.encolar(new Nodo("Admin SOLE",  "admin@sole.com",  "admin",  "admin",   "+57 320 000 0000", "Sede Principal SOLE, Bogotá"));
             // Guardar en archivo por primera vez
             colaUsuarios.guardarUsuarios(RUTA_USERS);
         }

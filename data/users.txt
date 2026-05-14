@@ -1,3 +1,3 @@
-Juan García;juan@email.com;123456;cliente
-María López;maria@email.com;123456;cliente
-Admin SOLE;admin@sole.com;admin;admin
+Juanito Tordecilla;juan@email.com;123456;cliente;+57 300 000 0000;Calle 123 #45-67, Bogotá, Colombia
+María López;maria@email.com;123456;cliente;+57 311 111 1111;Carrera 45 #12-34, Medellín, Colombia
+Admin SOLE;admin@sole.com;admin;admin;+57 320 000 0000;Sede Principal SOLE, Bogotá

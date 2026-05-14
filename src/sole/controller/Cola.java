@@ -101,8 +101,8 @@ public class Cola {
             Nodo p = inicio;
             do {
                 if ("user".equals(p.tipo)) {
-                    bw.write(p.name + ";" + p.email + ";"
-                           + p.password + ";" + p.role);
+                    bw.write(p.name + ";" + p.email + ";" + p.password + ";" + p.role
+                                + ";" + p.telefono + ";" + p.direccion);
                     bw.newLine();
                 }
                 p = p.sig;
@@ -128,9 +128,12 @@ public class Cola {
                 linea = linea.trim();
                 if (!linea.isEmpty()) {
                     String[] d = linea.split(";", -1);
-                    if (d.length == 4) {
-                        Nodo n = new Nodo(d[0].trim(), d[1].trim(),
-                                          d[2].trim(), d[3].trim());
+                    if (d.length >= 4) {
+                        Nodo n = new Nodo(
+                            d[0].trim(), d[1].trim(), d[2].trim(), d[3].trim(),
+                            d.length > 4 ? d[4].trim() : "",
+                            d.length > 5 ? d[5].trim() : ""
+                        );
                         encolar(n);
                     }
                 }
@@ -218,5 +221,26 @@ public class Cola {
             p = p.sig;
         } while (p != inicio);
         return null;
+    }
+    
+    /**
+    * Actualiza el nombre de un usuario en la cola buscándolo por email.
+    * Luego guarda los cambios en el archivo.
+    */
+    public boolean actualizarPerfil(String email, String nuevoNombre,
+        String nuevoTelefono, String nuevaDireccion, String rutaArchivo) {
+        if (esVacia()) return false;
+        Nodo p = inicio;
+        do {
+            if ("user".equals(p.tipo) && p.email.equalsIgnoreCase(email)) {
+                p.name      = nuevoNombre;
+                p.telefono  = nuevoTelefono;
+                p.direccion = nuevaDireccion;
+                guardarUsuarios(rutaArchivo);
+                return true;
+            }
+            p = p.sig;
+        } while (p != inicio);
+        return false;
     }
 }
