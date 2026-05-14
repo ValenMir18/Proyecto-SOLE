@@ -11,6 +11,7 @@ import sole.model.Product;
 import sole.model.User;
 import sole.util.DataStore;
 import sole.util.Styles;
+import javafx.scene.image.ImageView;
 
 import java.util.List;
 
@@ -192,9 +193,39 @@ public class ClientController {
         badge.setStyle("-fx-background-color: " + badgeColor +
             "-fx-background-radius: 3; -fx-padding: 2 7; -fx-font-size: 9px;");
 
-        Label shoe   = new Label("👟");
-        shoe.setStyle("-fx-font-size: 40px;");
-        shoe.setAlignment(Pos.CENTER);
+        // ── IMAGEN REAL DEL TENIS ──
+ImageView shoe = new ImageView();
+shoe.setFitWidth(160);
+shoe.setFitHeight(110);
+shoe.setPreserveRatio(true);
+shoe.setSmooth(true);
+
+String imageName = switch (p.getBrand().toLowerCase()) {
+    case "nike"     -> switch (p.getName().toLowerCase()) {
+        case String n when n.contains("air max")  -> "nikeAirMax.jpg";
+        case String n when n.contains("blazer")   -> "nikeBlazer.jpg";
+        case String n when n.contains("force")    -> "nikeForce.jpg";
+        default                                    -> "nikeAirMax.jpg";
+    };
+    case "adidas"   -> "adidasUltra.jpg";
+    case "jordan"   -> "airJordan.jpg";
+    case "converse" -> switch (p.getName().toLowerCase()) {
+        case String n when n.contains("taylor")   -> "chuckTaylor.jpg";
+        default                                    -> "chuck.jpg";
+    };
+    case "new balance" -> "newBlance.jpg";
+    case "puma"     -> "pumaRs.jpg";
+    default         -> "nikeAirMax.jpg";
+};
+
+try {
+    javafx.scene.image.Image img = new javafx.scene.image.Image(
+        getClass().getResourceAsStream("/images/" + imageName)
+    );
+    shoe.setImage(img);
+} catch (Exception ex) {
+    System.out.println("⚠ Imagen no encontrada: " + imageName);
+}
 
         Label brand  = new Label(p.getBrand().toUpperCase());
         brand.getStyleClass().add("product-brand");
@@ -215,7 +246,12 @@ public class ClientController {
             addBtn.setOnAction(e -> showAlert("Carrito", p.getName() + " agregado al carrito ✓"));
         }
 
-        card.getChildren().addAll(badge, shoe, brand, name, price, cat, addBtn);
+        // Contenedor centrado para la imagen
+        javafx.scene.layout.StackPane imgContainer = new javafx.scene.layout.StackPane(shoe);
+        imgContainer.setStyle("-fx-background-color: #1e1e1e; -fx-background-radius: 6; -fx-padding: 8;");
+        imgContainer.setMinHeight(126);
+
+        card.getChildren().addAll(badge, imgContainer, brand, name, price, cat, addBtn);
         return card;
     }
 
