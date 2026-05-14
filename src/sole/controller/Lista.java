@@ -1,12 +1,5 @@
 package sole.controller;
 
-/**
- * LISTA simplemente enlazada.
- * Usada como carrito de compras del cliente.
- * Cumple el requisito del profesor de mostrar el uso de listas enlazadas.
- *
- * Cada nodo guarda: idProducto, nombre, precio, cantidad
- */
 public class Lista {
 
     private NodoLista cabeza;

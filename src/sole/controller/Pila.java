@@ -1,16 +1,5 @@
 package sole.controller;
 
-/**
- * PILA (Stack) enlazada simple.
- * Usada para registrar el historial de navegación del usuario en sesión,
- * cumpliendo el requisito del profesor de mostrar uso de pilas.
- *
- * Ejemplo de uso:
- *   pila.push("LOGIN");
- *   pila.push("DASHBOARD");
- *   pila.push("PRODUCTO_3");
- *   pila.pop() → "PRODUCTO_3"
- */
 public class Pila {
 
     private NodoPila tope;

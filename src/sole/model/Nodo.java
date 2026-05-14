@@ -1,9 +1,5 @@
 package sole.model;
 
-/**
- * Nodo genérico para Cola circular doblemente enlazada y Pila.
- * Adaptado del ejemplo del profesor para manejar User y Product.
- */
 public class Nodo {
     // Campos para Usuario
     public String name;

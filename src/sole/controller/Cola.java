@@ -6,14 +6,6 @@ import sole.model.Product;
 
 import java.io.*;
 
-/**
- * Cola Circular Doblemente Enlazada — adaptada del ejemplo del profesor.
- * Almacena Usuarios O Productos según el tipo configurado al construir.
- *
- * Estructura de archivos:
- *   users.txt    →  name;email;password;role
- *   products.txt →  id;name;brand;category;price;stock
- */
 public class Cola {
 
     public Nodo inicio;

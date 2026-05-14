@@ -10,18 +10,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * DataStore — Almacén central de la aplicación SOLE.
- *
- * Usa estructuras de datos del profesor:
- *   • Cola circular doblemente enlazada → usuarios y productos
- *   • Pila enlazada                    → historial de sesión
- *   • Lista enlazada                   → carrito (en ClientController)
- *
- * Archivos de texto:
- *   data/users.txt    → persiste usuarios
- *   data/products.txt → persiste productos
- */
 public class DataStore {
 
     // ── Rutas de archivos ──
